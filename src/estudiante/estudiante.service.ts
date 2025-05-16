@@ -18,10 +18,12 @@ export class EstudianteService {
   ): Promise<Estudiante> {
     const estudiante: Estudiante = plainToInstance(Estudiante, estudianteDTO);
 
-    const estudianteExistente = await this.getEstudianteHelperId(estudiante.id);
+    const estudianteExistente = await this.getEstudianteHelperCedula(
+      estudiante.cedula,
+    );
 
     if (estudianteExistente) {
-      throw new ConflictException('Estudiante ya existe con este id');
+      throw new ConflictException('Estudiante ya existe con esta cedula');
     }
 
     const createdEstudiante = this.estudianteRepository.create(estudiante);
@@ -45,6 +47,16 @@ export class EstudianteService {
   private async getEstudianteHelperId(id: number): Promise<Estudiante | null> {
     const estudiante = await this.estudianteRepository.findOne({
       where: { id },
+    });
+
+    return estudiante;
+  }
+
+  private async getEstudianteHelperCedula(
+    cedula: number,
+  ): Promise<Estudiante | null> {
+    const estudiante = await this.estudianteRepository.findOne({
+      where: { cedula },
     });
 
     return estudiante;
