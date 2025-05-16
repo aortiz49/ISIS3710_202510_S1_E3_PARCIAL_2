@@ -5,12 +5,15 @@ import { Repository } from 'typeorm';
 import { CreateEstudianteDto } from './dto/create-estudiante.dto/create-estudiante.dto';
 import { plainToInstance } from 'class-transformer';
 import { ConflictException, NotFoundException } from '@nestjs/common';
+import { Actividad } from 'src/actividad/actividad.entity';
 
 @Injectable()
 export class EstudianteService {
   constructor(
     @InjectRepository(Estudiante)
     private readonly estudianteRepository: Repository<Estudiante>,
+    @InjectRepository(Actividad)
+    private readonly actividadRepository: Repository<Actividad>,
   ) {}
 
   async crearEstudiante(
@@ -40,6 +43,25 @@ export class EstudianteService {
     }
 
     return estudiante;
+  }
+
+  async inscribirseActivdad(
+    id: number,
+    actividadId: number,
+  ): Promise<Estudiante> {
+    const estudiante = await this.getEstudianteHelperId(id);
+    const actividad = await this.actividadRepository.findOne({
+      where: { id: actividadId },
+    });
+
+    if (!estudiante || !actividad) {
+      throw new NotFoundException('Estudiante o actividad no encontrada');
+    }
+
+    if (actividad.estado == 0) {
+      estudiante.actividades.push(actividad);
+    }
+    return this.estudianteRepository.save(estudiante);
   }
 
   // helpers
