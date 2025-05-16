@@ -11,4 +11,7 @@ export class Actividad extends BaseEntity {
 
   @Column()
   cupoMaximo: number;
+
+  @Column()
+  estado: number;
 }
