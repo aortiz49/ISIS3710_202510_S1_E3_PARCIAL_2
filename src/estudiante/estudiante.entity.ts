@@ -4,7 +4,7 @@ import { BaseEntity } from 'src/common/entities/base.entity';
 @Entity()
 export class Estudiante extends BaseEntity {
   @Column()
-  cedula: string;
+  cedula: number;
 
   @Column()
   nombre: string;
