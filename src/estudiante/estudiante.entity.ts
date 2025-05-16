@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { BaseEntity } from 'src/common/entities/base.entity';
 import { Resena } from 'src/resena/resena.entity';
+import { Actividad } from 'src/actividad/actividad.entity';
 
 @Entity()
 export class Estudiante extends BaseEntity {
@@ -21,4 +22,8 @@ export class Estudiante extends BaseEntity {
 
   @OneToMany(() => Resena, (resena) => resena.estudiante)
   resenas: Resena[];
+
+  @ManyToMany(() => Actividad, (actividad) => actividad.estudiantes)
+  @JoinTable()
+  actividades: Actividad[];
 }
