@@ -5,6 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EstudianteModule } from './estudiante/estudiante.module';
 import { ActividadModule } from './actividad/actividad.module';
 import { ResenaModule } from './resena/resena.module';
+import { Estudiante } from './estudiante/estudiante.entity';
+import { Actividad } from './actividad/actividad.entity';
+import { Resena } from './resena/resena.entity';
 
 @Module({
   imports: [
@@ -14,7 +17,7 @@ import { ResenaModule } from './resena/resena.module';
       port: 5432,
       username: 'renegade',
       database: 'eventos-culturales',
-      entities: [],
+      entities: [Estudiante, Actividad, Resena],
       autoLoadEntities: true,
       synchronize: true,
     }),
