@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from 'src/common/entities/base.entity';
+import { Resena } from 'src/resena/resena.entity';
 
 @Entity()
 export class Estudiante extends BaseEntity {
@@ -17,4 +18,7 @@ export class Estudiante extends BaseEntity {
 
   @Column()
   semestre: number;
+
+  @OneToMany(() => Resena, (resena) => resena.estudiante)
+  resenas: Resena[];
 }
