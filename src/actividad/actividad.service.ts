@@ -26,16 +26,6 @@ export class ActividadService {
     return this.actividadRepository.save(createdActividad);
   }
 
-  async findActividadById(id: number): Promise<Actividad | null> {
-    const actividad = await this.getActividadHelperId(id);
-
-    if (!actividad) {
-      throw new NotFoundException('Actividad no encontrada');
-    }
-
-    return actividad;
-  }
-
   async findAllActividadesByDate(date: string): Promise<Actividad[]> {
     const actividades = await this.actividadRepository.find({
       where: { fecha: date },
@@ -53,17 +43,22 @@ export class ActividadService {
     }
 
     // solo cambiar estado a cerrada si hay 80% de cupo
-    if (estado === 1) {
-      if (actividad.estudiantes?.length / actividad.cupoMaximo === MAX) {
+    if (estado == 1) {
+      console.log(actividad.estudiantes?.length / actividad.cupoMaximo);
+      if (actividad.estudiantes?.length / actividad.cupoMaximo >= MAX) {
         actividad.estado = 1;
+      } else {
+        throw new BadRequestException('Actividad no tiene 80% de cupo');
       }
     }
 
     // solo cambiar estado a cerrada si esta llena
 
-    if (estado === 2) {
+    if (estado == 2) {
       if (actividad.estudiantes?.length === actividad.cupoMaximo) {
         actividad.estado = 2;
+      } else {
+        throw new BadRequestException('Actividad no esta llena');
       }
     }
 

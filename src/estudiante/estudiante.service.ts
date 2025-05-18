@@ -69,6 +69,7 @@ export class EstudianteService {
   private async getEstudianteHelperId(id: number): Promise<Estudiante | null> {
     const estudiante = await this.estudianteRepository.findOne({
       where: { id },
+      relations: ['actividades'],
     });
 
     return estudiante;

@@ -8,6 +8,7 @@ import { ResenaModule } from './resena/resena.module';
 import { Estudiante } from './estudiante/estudiante.entity';
 import { Actividad } from './actividad/actividad.entity';
 import { Resena } from './resena/resena.entity';
+import { ActividadController } from './actividad/actividad.controller';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { Resena } from './resena/resena.entity';
     ActividadModule,
     ResenaModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ActividadController],
   providers: [AppService],
 })
 export class AppModule {}
