@@ -18,4 +18,12 @@ export class ResenaService {
     const createdResena = this.resenaRepository.create(resena);
     return this.resenaRepository.save(createdResena);
   }
+
+  async findResenaById(id: number): Promise<Resena | null> {
+    const resena = await this.resenaRepository.findOne({
+      where: { id },
+    });
+
+    return resena;
+  }
 }
