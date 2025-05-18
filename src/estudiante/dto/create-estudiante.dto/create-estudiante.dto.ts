@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+  IsEmail,
+  Min,
+  Max,
+} from 'class-validator';
 
 export class CreateEstudianteDto {
   @IsNotEmpty()
@@ -11,13 +18,15 @@ export class CreateEstudianteDto {
 
   @IsNotEmpty()
   @IsString()
+  @IsEmail({}, { message: 'Email no es válido' })
   correo: string;
 
   @IsNotEmpty()
   @IsString()
   programa: string;
 
-  @IsNotEmpty()
   @IsNumber()
+  @Min(1, { message: 'Semestre debe ser mínimo 1' })
+  @Max(10, { message: 'Semestre no puede ser mayor a 10' })
   semestre: number;
 }

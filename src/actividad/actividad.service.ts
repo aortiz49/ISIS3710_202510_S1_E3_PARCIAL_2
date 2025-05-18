@@ -44,7 +44,6 @@ export class ActividadService {
 
     // solo cambiar estado a cerrada si hay 80% de cupo
     if (estado == 1) {
-      console.log(actividad.estudiantes?.length / actividad.cupoMaximo);
       if (actividad.estudiantes?.length / actividad.cupoMaximo >= MAX) {
         actividad.estado = 1;
       } else {
